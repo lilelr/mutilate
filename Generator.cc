@@ -64,7 +64,7 @@ Generator* createGenerator(std::string str) {
   double a3 = s3 ? atof(s3) : 0.0;
 
   delete[] s_copy;
-
+  I("lele Generator.cc %s",str.c_str());
   if      (strcasestr(str.c_str(), "fixed")) return new Fixed(a1);
   else if (strcasestr(str.c_str(), "normal")) return new Normal(a1, a2);
   else if (strcasestr(str.c_str(), "exponential")) return new Exponential(a1);
