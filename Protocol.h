@@ -34,7 +34,6 @@ public:
     Protocol(opts, conn, bev) {
     read_state = IDLE;
   };
-
   ~ProtocolAscii() {};
 
   virtual bool setup_connection_w() { return true; }

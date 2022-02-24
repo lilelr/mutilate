@@ -64,7 +64,7 @@ private:
 class Uniform : public Generator {
 public:
   Uniform(double _scale) : scale(_scale) { D("Uniform(%f)", scale); }
-
+  // U=-1.0, generate the delay
   virtual double generate(double U = -1.0) {
     if (U < 0.0) U = drand48();
     return scale * U;
@@ -195,12 +195,13 @@ public:
   std::string generate(uint64_t ind) {
     uint64_t h = fnv_64(ind);
     double U = (double) h / ULLONG_MAX;
+    // U is in [0,1]
     double G = g->generate(U);
     int keylen = MAX(round(G), floor(log10(max)) + 1);
     char key[256];
     snprintf(key, 256, "%0*" PRIu64, keylen, ind);
 
-    //    D("%d = %s", ind, key);
+//    D("%d = %s", ind, key);
     return std::string(key);
   }
 private:

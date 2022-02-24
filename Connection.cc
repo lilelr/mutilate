@@ -30,7 +30,8 @@ Connection::Connection(struct event_base* _base, struct evdns_base* _evdns,
   keygen = new KeyGenerator(keysize, options.records);
 
   if (options.lambda <= 0) {
-    iagen = createGenerator("0");
+      D("lele options.lambda");
+      iagen = createGenerator("0");
   } else {
     D("iagen = createGenerator(%s)", options.ia);
     iagen = createGenerator(options.ia);
@@ -43,15 +44,15 @@ Connection::Connection(struct event_base* _base, struct evdns_base* _evdns,
   last_tx = last_rx = 0.0;
 
   bev = bufferevent_socket_new(base, -1, BEV_OPT_CLOSE_ON_FREE);
-  bufferevent_setcb(bev, bev_read_cb, bev_write_cb, bev_event_cb, this);
+  bufferevent_setcb(bev, bev_read_cb, bev_write_cb, bev_event_cb, this); // initialize the callback functions for read or write events
   bufferevent_enable(bev, EV_READ | EV_WRITE);
 
-  if (options.binary) {
+  if (options.binary) { // pass bev to the Protocol
     prot = new ProtocolBinary(options, this, bev);
   } else {
     prot = new ProtocolAscii(options, this, bev);
   }
-
+   // connect to the server
   if (bufferevent_socket_connect_hostname(bev, evdns, AF_UNSPEC,
                                           hostname.c_str(),
                                           atoi(port.c_str()))) {
@@ -124,7 +125,7 @@ void Connection::issue_something(double now) {
   string keystr = keygen->generate(lrand48() % options.records);
   strcpy(key, keystr.c_str());
 
-  if (drand48() < options.update) {
+  if (drand48() < options.update) { // update is the set:get ratio, the default is 0.0
     int index = lrand48() % (1024 * 1024);
     issue_set(key, &random_char[index], valuesize->generate(), now);
   } else {
@@ -288,7 +289,7 @@ void Connection::event_callback(short events) {
  * Note that this function loops. Be wary of break vs. return.
  */
 void Connection::drive_write_machine(double now) {
-  if (now == 0.0) now = get_time();
+  if (now == 0.0) now = get_time(); // now is the number of seconds of current_time today
 
   double delay;
   struct timeval tv;
@@ -307,6 +308,8 @@ void Connection::drive_write_machine(double now) {
 
     case ISSUING:
       if (op_queue.size() >= (size_t) options.depth) {
+          // // if the previous operation is proceed successfully, the it will be popped up.
+          // then the size of operation queue will be reduced by 1.
         write_state = WAITING_FOR_OPQ;
         return;
       } else if (now < next_time) {
@@ -322,16 +325,15 @@ void Connection::drive_write_machine(double now) {
         }
         return;
       }
-
+      // now >= next_time
       issue_something(now);
       last_tx = now;
       stats.log_op(op_queue.size());
       next_time += iagen->generate();
-
-      if (options.skip && options.lambda > 0.0 &&
+//            I("lele option.skp is %d",options.skip);
+            if (options.skip && options.lambda > 0.0 &&
           now - next_time > 0.005000 &&
           op_queue.size() >= (size_t) options.depth) {
-
         while (next_time < now - 0.004000) {
           stats.skips++;
           next_time += iagen->generate();
@@ -341,7 +343,7 @@ void Connection::drive_write_machine(double now) {
 
     case WAITING_FOR_TIME:
       if (now < next_time) {
-        if (!event_pending(timer, EV_TIMEOUT, NULL)) {
+        if (!event_pending(timer, EV_TIMEOUT, NULL)) { // no timeout
           delay = next_time - now;
           double_to_tv(delay, &tv);
           evtimer_add(timer, &tv);
@@ -352,6 +354,7 @@ void Connection::drive_write_machine(double now) {
       break;
 
     case WAITING_FOR_OPQ:
+        I("lele option.depth is %d",options.depth);
       if (op_queue.size() >= (size_t) options.depth) return;
       write_state = ISSUING;
       break;

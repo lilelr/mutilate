@@ -165,7 +165,7 @@ void agent() {
     socket.recv(&request);
 
     zmq::message_t num(sizeof(int));
-    *((int *) num.data()) = args.threads_arg * args.lambda_mul_arg;
+    *((int *) num.data()) = args.threads_arg * args.lambda_mul_arg; // PREPARATION PHASE Agent -> Master: int num = (--threads) * (--lambda_mul)
     socket.send(num);
 
     options_t options;
@@ -318,7 +318,7 @@ void finish_agent(ConnectionStats &stats) {
  * then broadcasts the message to proceed, which reasonably limits
  * skew.
  */
-
+ // lele the master to synchronize each agent.
 void sync_agent(zmq::socket_t* socket) {
   //  V("agent: synchronizing");
 
@@ -465,7 +465,7 @@ int main(int argc, char **argv) {
 #endif
 
   options_t options;
-  args_to_options(&options);
+  args_to_options(&options); // parameters parsing
 
   pthread_barrier_init(&barrier, NULL, options.threads);
 
@@ -976,9 +976,10 @@ void do_mutilate(const vector<string>& servers, options_t& options,
 #endif
 
   if (master && !args.scan_given && !args.search_given)
-    V("started at %f", get_time());
+    I("started at %f", get_time());
+//    V("started at %f", get_time());
 
-  start = get_time();
+    start = get_time();
   for (Connection *conn: connections) {
     conn->start_time = start;
     conn->start(); // Kick the Connection into motion.
@@ -1085,6 +1086,8 @@ void args_to_options(options_t* options) {
   options->no_nodelay = args.no_nodelay_given;
   options->noload = args.noload_given;
   options->iadist = get_distribution(args.iadist_arg);
+    printf("lele get_distribution %s\n",args.iadist_arg);
+    printf("lele options->iadist %d\n",options->iadist);
   strcpy(options->ia, args.iadist_arg);
   options->warmup = args.warmup_given ? args.warmup_arg : 0;
   options->oob_thread = false;

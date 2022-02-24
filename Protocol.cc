@@ -61,11 +61,11 @@ bool ProtocolAscii::handle_response(evbuffer *input, bool &done) {
 
     conn->stats.rx_bytes += n_read_out;
 
-    if (!strncmp(buf, "END", 3)) {
+    if (!strncmp(buf, "END", 3)) { // expired, failed to get the value
       if (read_state == WAITING_FOR_GET) conn->stats.get_misses++;
       read_state = WAITING_FOR_GET;
       done = true;
-    } else if (!strncmp(buf, "VALUE", 5)) {
+    } else if (!strncmp(buf, "VALUE", 5)) { // successfully get the value (e.g. VALUE name 16 5(len) 12345)
       sscanf(buf, "VALUE %*s %*d %d", &len);
 
       // FIXME: check key name to see if it corresponds to the op at
@@ -73,7 +73,7 @@ bool ProtocolAscii::handle_response(evbuffer *input, bool &done) {
       // support "gets" where there may be misses.
 
       data_length = len;
-      read_state = WAITING_FOR_GET_DATA;
+      read_state = WAITING_FOR_GET_DATA; // prepare to get data
       done = false;
     } else {
       // must be a value line..
