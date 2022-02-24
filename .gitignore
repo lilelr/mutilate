@@ -8,4 +8,4 @@ cmdline.cc
 cmdline.h
 gtest
 config.h
-./cmake-build-debug
+cmake-build-debug

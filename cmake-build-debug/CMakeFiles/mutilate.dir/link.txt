@@ -1,1 +1,0 @@
-/usr/bin/c++ -g -rdynamic CMakeFiles/mutilate.dir/mutilate.cc.o CMakeFiles/mutilate.dir/cmdline.cc.o CMakeFiles/mutilate.dir/log.cc.o CMakeFiles/mutilate.dir/distributions.cc.o CMakeFiles/mutilate.dir/util.cc.o CMakeFiles/mutilate.dir/Connection.cc.o CMakeFiles/mutilate.dir/Protocol.cc.o CMakeFiles/mutilate.dir/Generator.cc.o -o mutilate  -levent -lpthread -lrt -lzmq 

@@ -1,1 +1,0 @@
-/usr/bin/c++ -g -rdynamic CMakeFiles/test_generator.dir/TestGenerator.cc.o CMakeFiles/test_generator.dir/log.cc.o CMakeFiles/test_generator.dir/Generator.cc.o -o test_generator  -levent -lpthread -lrt -lzmq 
