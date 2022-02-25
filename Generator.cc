@@ -47,9 +47,11 @@ Generator* createGenerator(std::string str) {
     return new Fixed(v);
   }
 
+    I("createGenerator %s",s_copy);
   char *t_ptr = strtok_r(s_copy, ":", &saveptr);
-  char *a_ptr = strtok_r(NULL, ":", &saveptr);
-
+    I("createGenerator t_ptr %s",t_ptr);
+    char *a_ptr = strtok_r(NULL, ":", &saveptr);
+    I("createGenerator a_ptr %s",a_ptr);
   if (t_ptr == NULL) // || a_ptr == NULL)
     DIE("strtok(.., \":\") failed to parse %s", str.c_str());
 

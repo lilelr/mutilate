@@ -77,6 +77,11 @@ cd open-source/mutilate/cmake-build-debug/
 -a p09 -a p10 \
 -c 4 -q 20000
 
+gdb --args ./mutilate -s slave4 --noload -i exponential \
+-B -T 4 -Q 1000 -D 4 -C 4 \
+-a p09  \
+-c 4 -q 2000
+
 ./mutilate -s slave4 --noload -i exponential \
 -B -T 4 -Q 1000 -D 4 -C 4 \
 -a slave4 -a p10 \
