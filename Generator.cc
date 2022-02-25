@@ -32,6 +32,7 @@ Generator* createFacebookValue() {
 Generator* createFacebookIA() { return new GPareto(0, 16.0292, 0.154971); }
 
 Generator* createGenerator(std::string str) {
+    I("createGenerator %s",str.c_str());
   if (!strcmp(str.c_str(), "fb_key")) return createFacebookKey();
   else if (!strcmp(str.c_str(), "fb_value")) return createFacebookValue();
   else if (!strcmp(str.c_str(), "fb_ia")) return createFacebookIA();

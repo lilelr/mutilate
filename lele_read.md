@@ -65,7 +65,7 @@ sudo apt-get install -y scons libevent-dev gengetopt
 #### cluster mode
 ##### cd open-source/mutilate/cmake-build-debug/
 #####  on p09
-cd open-source/mutilate/cmake-build-debug/ && ./mutilate -T 16 -A
+cd open-source/mutilate/build/ && ./mutilate -T 16 -A
 ##### on slave4
 cd open-source/mutilate/cmake-build-debug/
 ./mutilate -s slave4 --loadonly
@@ -74,6 +74,12 @@ cd open-source/mutilate/cmake-build-debug/
 -B -T 16 -Q 1000 -D 4 -C 4 \
 -a p09 -a p10 \
 -c 4 -q 20000
+
+#### test 
+./mutilate -s slave4 --noload -i exponential \
+-B -T 4 -Q 1000 -D 4 -C 4 \
+-a p09  \
+-c 4 -q 2000
 
 ### 5 seconds, 10 threads, and 8 connections
 Facebook "gev:30.7984,8.20449,0.078688", key-size distribution
