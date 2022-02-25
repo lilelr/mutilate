@@ -4,8 +4,8 @@
 config.log
 gmon.out
 mutilate
-cmdline.cc
-cmdline.h
+#cmdline.cc
+#cmdline.h
 gtest
-config.h
+#config.h
 cmake-build-debug
