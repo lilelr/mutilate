@@ -66,6 +66,8 @@ sudo apt-get install -y scons libevent-dev gengetopt
 ##### cd open-source/mutilate/cmake-build-debug/
 #####  on p09
 cd open-source/mutilate/build/ && ./mutilate -T 16 -A
+
+./mutilate -T 1 -A
 ##### on slave4
 cd open-source/mutilate/cmake-build-debug/
 ./mutilate -s slave4 --loadonly
@@ -74,6 +76,11 @@ cd open-source/mutilate/cmake-build-debug/
 -B -T 16 -Q 1000 -D 4 -C 4 \
 -a p09 -a p10 \
 -c 4 -q 20000
+
+./mutilate -s slave4 --noload -i exponential \
+-B -T 4 -Q 1000 -D 4 -C 4 \
+-a slave4 -a p10 \
+-c 4 -q 2000
 
 #### test 
 ./mutilate -s slave4 --noload -i exponential \
