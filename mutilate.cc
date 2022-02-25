@@ -221,7 +221,9 @@ void agent() {
 }
 
 void prep_agent(const vector<string>& servers, options_t& options) {
-  int sum = options.lambda_denom;
+    I("lele  prep_agent");
+
+    int sum = options.lambda_denom;
   if (args.measure_connections_given)
     sum = args.measure_connections_arg * options.server_given * options.threads;
 
@@ -320,7 +322,7 @@ void finish_agent(ConnectionStats &stats) {
  */
  // lele the master to synchronize each agent.
 void sync_agent(zmq::socket_t* socket) {
-  //  V("agent: synchronizing");
+  V("agent: synchronizing");
 
   if (args.agent_given) {
     for (auto s: agent_sockets)
@@ -346,6 +348,7 @@ void sync_agent(zmq::socket_t* socket) {
     if (s_recv(*socket).compare(string("proceed")))
       DIE("sync_agent[A]: out of sync [2]");
     /* End sync */
+      V("agent: End sync");
 
     s_send(*socket, "ack");
   }
@@ -645,6 +648,7 @@ void go(const vector<string>& servers, options_t& options,
 , zmq::socket_t* socket
 #endif
 ) {
+    I("lele  go(const vector<string>& servers");
 #ifdef HAVE_LIBZMQ
   if (args.agent_given > 0) {
     prep_agent(servers, options);
@@ -712,6 +716,7 @@ void go(const vector<string>& servers, options_t& options,
       if (pthread_create(&pt[t], &attr, thread_main, &td[t]))
         DIE("pthread_create() failed");
     }
+      I("lele  mutilate.cc 718 pthread finished");
 
     for (int t = 0; t < options.threads; t++) {
       ConnectionStats *cs;
@@ -728,7 +733,8 @@ void go(const vector<string>& servers, options_t& options,
   } else {
 #ifdef HAVE_LIBZMQ
     if (args.agent_given) {
-      sync_agent(socket);
+        I("lele  mutilate.cc 745 sync_agent");
+        sync_agent(socket);
     }
 #endif
   }
