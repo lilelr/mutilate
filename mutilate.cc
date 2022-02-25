@@ -667,7 +667,7 @@ void go(const vector<string>& servers, options_t& options,
 #ifdef __linux__
     int current_cpu = -1;
 #endif
-
+      I("lele  options.threads %d",options.threads);
     for (int t = 0; t < options.threads; t++) {
       td[t].options = &options;
 #ifdef HAVE_LIBZMQ
@@ -688,7 +688,7 @@ void go(const vector<string>& servers, options_t& options,
 
       pthread_attr_t attr;
       pthread_attr_init(&attr);
-
+        I("lele  pthread_attr_init");
 #ifdef __linux__
       if (args.affinity_given) {
         int max_cpus = 8 * sizeof(cpu_set_t);

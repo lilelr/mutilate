@@ -8,4 +8,5 @@ mutilate
 #cmdline.h
 gtest
 #config.h
+.idea
 cmake-build-debug
