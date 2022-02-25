@@ -93,6 +93,11 @@ gdb --args ./mutilate -s slave4 --noload -i exponential \
 -a p09  \
 -c 4 -q 2000
 
+on p09
+./mutilate -T 4 -A
+
+./mutilate -s slave4 --noload -i pareto:0.0,16.0292,0.154971  -B -T 4 -Q 1000 -D 4 -C 4 -a p09 -a p10 -c 4 -q 2000
+
 ### 5 seconds, 10 threads, and 8 connections
 Facebook "gev:30.7984,8.20449,0.078688", key-size distribution
 ./mutilate -s localhost:11211 -T 10 -c 8 -t 5 -i gev:30.7984,8.20449,0.078688
