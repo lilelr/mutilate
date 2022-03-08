@@ -1,5 +1,6 @@
 
 docker run -p 11211:11211 --name lele_memcache memcached
+docker run -p 11211:11211 memcached -c 8 -c 10000
 
 ### telnet testing
 https://blog.csdn.net/think2me/article/details/52091740
@@ -133,7 +134,6 @@ lemaker@slave4:~/open-source/mutilate/build$
 ./mutilate -s slave4:11211 --noload -i pareto:0.0,16.0292,0.154971  -B -T 4 -Q 10000 -D 4 -C 4 -a p09 -a p10 -c 10 -d 10 -t 10
 -q 10000000
 
-./mutilate -s slave4:11211 --noload -i exponential:1  -B -T 4 -Q 10000 -D 4 -C 4 -a p09 -a p10 -c 10 -d 10 -t 10 -q 10000000
 
 
 
@@ -144,7 +144,7 @@ p10
 
 /home/lemaker/open-source/mutilate/mutilate.cc(748): Local QPS = 9967.7 (99677 / 10.0s)
 #type       avg     std     min     5th    10th    90th    95th    99th
-read      149.6   581.5    34.0    60.7    63.9   263.7   367.7   672.7
+read      149.6   581.5    34.0    60.7    63.9   263.7   367.7   672.7  microseconds
 update      0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0
 op_q        1.1     0.3     1.0     1.0     1.0     1.1     2.0     2.1
 
@@ -156,6 +156,33 @@ Skipped TXs = 0 (0.0%)
 RX  382569902 bytes :   36.5 MB/s
 TX   55964196 bytes :    5.3 MB/s
 
+### exponential
+slave4
+./mutilate -s slave4:11211 --noload -i exponential:1  -B -T 4 -Q 300000 -D 4 -C 4 -a p09 -a p10 -c 4 -d 10 -t 60 -q 1000000
+p09,p10
+./mutilate -T 48 -A
+
+
+/home/lemaker/open-source/mutilate/mutilate.cc(748): Local QPS = 9199.8 (551988 / 60.0s)
+#type       avg     std     min     5th    10th    90th    95th    99th
+read     6955.4   588.7    66.3  6434.7  6483.2  7640.2  7843.0  9244.4
+update      0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0
+op_q        4.0     0.0     1.0     3.8     3.8     4.1     4.2     4.2
+
+Total QPS = 544956.5 (32698478 / 60.0s)
+
+Misses = 32698478 (100.0%)
+Skipped TXs = 0 (0.0%)
+
+RX   98095434 bytes :    1.6 MB/s
+TX 1177265592 bytes :   18.7 MB/s
+
+### three nodes p09,p10,p11
+
+slave4
+./mutilate -s slave4:11211 --noload -i exponential:1  -B -T 4 -Q 300000 -D 4 -C 4 -a p09 -a p10 -a p11 -c 4 -d 10 -t 10 -q 1000000
+p09,p10,p11
+./mutilate -T 48 -A
 
 top -Hp 120333
 

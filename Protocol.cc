@@ -62,7 +62,10 @@ bool ProtocolAscii::handle_response(evbuffer *input, bool &done) {
     conn->stats.rx_bytes += n_read_out;
 
     if (!strncmp(buf, "END", 3)) { // expired, failed to get the value
-      if (read_state == WAITING_FOR_GET) conn->stats.get_misses++;
+      if (read_state == WAITING_FOR_GET) {
+          conn->stats.get_misses++;
+          D("lele %d",conn->stats.get_misses);
+      }
       read_state = WAITING_FOR_GET;
       done = true;
     } else if (!strncmp(buf, "VALUE", 5)) { // successfully get the value (e.g. VALUE name 16 5(len) 12345)

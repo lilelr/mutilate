@@ -17,8 +17,9 @@
   <component name="ChangeListManager">
     <list default="true" id="14834a07-02d4-46c4-8636-95f4d77f85e1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Connection.cc" beforeDir="false" afterPath="$PROJECT_DIR$/Connection.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Protocol.cc" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lele_read.md" beforeDir="false" afterPath="$PROJECT_DIR$/lele_read.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mutilate.cc" beforeDir="false" afterPath="$PROJECT_DIR$/mutilate.cc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +39,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="4nqr0urc" />
@@ -97,7 +106,7 @@
       <workItem from="1642557557804" duration="3324000" />
       <workItem from="1644392087455" duration="33414000" />
       <workItem from="1644567199257" duration="24406000" />
-      <workItem from="1645669649153" duration="47303000" />
+      <workItem from="1645669649153" duration="52175000" />
     </task>
     <servers />
   </component>

@@ -167,12 +167,12 @@ void agent() {
     zmq::message_t num(sizeof(int));
     *((int *) num.data()) = args.threads_arg * args.lambda_mul_arg; // PREPARATION PHASE Agent -> Master: int num = (--threads) * (--lambda_mul)
     socket.send(num);
-
+    // agent get the options data from the server
     options_t options;
     memcpy(&options, request.data(), sizeof(options));
 
     vector<string> servers;
-
+        // lele agent gets the memcached server information from the server
     for (int i = 0; i < options.server_given; i++) {
       servers.push_back(s_recv(socket));
       s_send(socket, "ACK");
@@ -183,7 +183,7 @@ void agent() {
     }
 
     options.threads = args.threads_arg;
-
+    // agent get the lamda_denom from the server
     socket.recv(&request);
     options.lambda_denom = *((int *) request.data());
     s_send(socket, "THANKS");
