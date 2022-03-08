@@ -354,7 +354,7 @@ void Connection::drive_write_machine(double now) {
       break;
 
     case WAITING_FOR_OPQ:
-        I("lele option.depth is %d",options.depth);
+//        I("lele option.depth is %d",options.depth);
       if (op_queue.size() >= (size_t) options.depth) return;
       write_state = ISSUING;
       break;

@@ -54,8 +54,16 @@ sudo apt-get install -y libzmq3-dev libzmq5
 
 sudo apt-get install -y scons libevent-dev gengetopt
 
-### 200 seconds, 10 threads, and 8 connections
-./mutilate -s localhost:11211 -T 10 -c 8 -t 2
+###  10 threads, and 8 connections, expoentential distribution, peak QPS,
+./mutilate -s localhost:11211 -T 10 -c 8 \
+-i exponential \
+-q 50000 \
+-t 20
+
+./mutilate -s slave4:11211 -T 10 -c 8 \
+-i exponential \
+-q 50000 \
+-t 10
 
 ./mutilate -s localhost:11211 -T 10 -c 8 -t 2
 
@@ -91,17 +99,62 @@ gdb --args ./mutilate -s slave4 --noload -i exponential \
 ./mutilate -s slave4 --noload -i exponential \
 -B -T 4 -Q 1000 -D 4 -C 4 \
 -a p09  \
--c 4 -q 2000
+-c 4 -q 20000
 
+#### cluster-mode
+##### on master 
+./mutilate -s slave4 --noload -i pareto:0.0,16.0292,0.154971  -B -T 4 -Q 1000 -D 4 -C 4 -a p09 -a p10 -c 4 -q 20000
+
+./mutilate -s slave4 --noload -i pareto:0.0,16.0292,0.154971  -B -T 4 -Q 10000 -D 4 -C 16 -a p09 -a p10 -c 16 -q 200000 -t 10
+
+
+./mutilate -s slave4:11211 --noload -i pareto:0.0,16.0292,0.154971  -B -T 4 -Q 1000 -D 4 -C 4 -a p09 -a p10 -c 4 -t 10
+./mutilate -s slave4:11211 -T 10 -c 8 -i exponential  -t 10
+
+#### example 
+./mutilate -s slave4 --noload -i pareto:0.0,16.0292,0.154971  -B -T 4 -Q 100 -D 4 -C 4 -a p09 -a p10 -c 8 -d 1000 -q 2000 -t 10
+
+##### on agent
 on p09
+cd /home/lemaker/open-source/mutilate/build
 ./mutilate -T 4 -A
+./mutilate -T 16 -d 16 -A
 
-./mutilate -s slave4 --noload -i pareto:0.0,16.0292,0.154971  -B -T 4 -Q 1000 -D 4 -C 4 -a p09 -a p10 -c 4 -q 2000
+
 
 ### 5 seconds, 10 threads, and 8 connections
 Facebook "gev:30.7984,8.20449,0.078688", key-size distribution
 ./mutilate -s localhost:11211 -T 10 -c 8 -t 5 -i gev:30.7984,8.20449,0.078688
 
+### must set the number of connections <=8 
+### example2 cluster
+### on slave4
+lemaker@slave4:~/open-source/mutilate/build$ 
+./mutilate -s slave4:11211 --noload -i pareto:0.0,16.0292,0.154971  -B -T 4 -Q 10000 -D 4 -C 4 -a p09 -a p10 -c 10 -d 10 -t 10
+-q 10000000
+
+./mutilate -s slave4:11211 --noload -i exponential:1  -B -T 4 -Q 10000 -D 4 -C 4 -a p09 -a p10 -c 10 -d 10 -t 10 -q 10000000
+
+
+
+p09
+./mutilate -T 48 -A
+p10
+./mutilate -T 26 -A
+
+/home/lemaker/open-source/mutilate/mutilate.cc(748): Local QPS = 9967.7 (99677 / 10.0s)
+#type       avg     std     min     5th    10th    90th    95th    99th
+read      149.6   581.5    34.0    60.7    63.9   263.7   367.7   672.7
+update      0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0
+op_q        1.1     0.3     1.0     1.0     1.0     1.1     2.0     2.1
+
+Total QPS = 154882.6 (1548866 / 10.0s)
+
+Misses = 0 (0.0%)
+Skipped TXs = 0 (0.0%)
+
+RX  382569902 bytes :   36.5 MB/s
+TX   55964196 bytes :    5.3 MB/s
 
 
 top -Hp 120333
@@ -143,3 +196,21 @@ https://en.wikipedia.org/wiki/Pareto_distribution
 ### uniform distribution
 https://en.wikipedia.org/wiki/Continuous_uniform_distribution
 https://en.wikipedia.org/wiki/Discrete_uniform_distribution
+
+
+### Generating an exponential distribution random variable can be done by:
+
+-ln(U)/lambda (where U~Uniform(0,1)).
+More information can be found in this wikipedia article
+https://en.wikipedia.org/wiki/Exponential_distribution#Generating_exponential_variates
+
+https://www.ttested.com/generating-normal-random-variables-part-1/
+
+In exponential distribution: lamda = 1/mean, so it gets you:
+
+myVar = -ln(U) * mean (where U~Uniform(0,1)).
+### Converting a Uniform Distribution to a Normal Distribution
+https://www.baeldung.com/cs/uniform-to-normal-distribution
+
+### gengetopt
+https://www.gnu.org/software/gengetopt/gengetopt.html#Basic-Usage
