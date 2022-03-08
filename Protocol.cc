@@ -64,7 +64,9 @@ bool ProtocolAscii::handle_response(evbuffer *input, bool &done) {
     if (!strncmp(buf, "END", 3)) { // expired, failed to get the value
       if (read_state == WAITING_FOR_GET) {
           conn->stats.get_misses++;
-          D("lele %d",conn->stats.get_misses);
+          D("lele conn->stats.get_misses %d",conn->stats.get_misses);
+          D("lele buf %s",buf);
+
       }
       read_state = WAITING_FOR_GET;
       done = true;
