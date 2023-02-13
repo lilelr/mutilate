@@ -17,7 +17,6 @@
   <component name="ChangeListManager">
     <list default="true" id="14834a07-02d4-46c4-8636-95f4d77f85e1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Protocol.cc" beforeDir="false" afterPath="$PROJECT_DIR$/Protocol.cc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,16 +62,11 @@
     <property name="cf.first.check.clang-format" value="false" />
     <property name="cidr.known.project.marker" value="true" />
     <property name="cmake.loaded.for.project" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../CLionProjects/files_read_write" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager" selected="CMake Application.test_generator">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="mutilate" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-s localhost:11211 -T 1 -c 1 -t 2" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Mutilate" TARGET_NAME="mutilate" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Mutilate" RUN_TARGET_NAME="mutilate">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -81,11 +75,6 @@
     <configuration name="test_generator" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Mutilate" TARGET_NAME="test_generator" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Mutilate" RUN_TARGET_NAME="test_generator">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <list>
@@ -104,7 +93,9 @@
       <workItem from="1642557557804" duration="3324000" />
       <workItem from="1644392087455" duration="33414000" />
       <workItem from="1644567199257" duration="24406000" />
-      <workItem from="1645669649153" duration="52318000" />
+      <workItem from="1645669649153" duration="53438000" />
+      <workItem from="1646789379507" duration="1817000" />
+      <workItem from="1676104247811" duration="3834000" />
     </task>
     <servers />
   </component>
